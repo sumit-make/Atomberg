@@ -18,7 +18,7 @@ const GoalForm = ({ onAdd, onUpdate, onCancel, initialGoal, isEditing }) => {
     setGoal((prev) => ({ ...prev, [e.target.name]: e.target.value }))
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     const normalizedGoal = {
       ...goal,
@@ -28,12 +28,10 @@ const GoalForm = ({ onAdd, onUpdate, onCancel, initialGoal, isEditing }) => {
     }
 
     if (isEditing) {
-      onUpdate(normalizedGoal)
+      await onUpdate(normalizedGoal)
     } else {
-      onAdd(normalizedGoal)
-    }
-    if (!isEditing) {
-      setGoal(initialGoal)
+      await onAdd(normalizedGoal)
+      setGoal(defaultGoal)
     }
   }
 

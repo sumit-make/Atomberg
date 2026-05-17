@@ -4,7 +4,8 @@
   "main": "server.js",
   "scripts": {
     "start": "nodemon server.js",
-    "seed": "node seed.js",
+    "seed": "node seedData.js",
+    "seed:basic": "node seed.js",
     "load:raw": "node load_raw.js"
   },
   "dependencies": {

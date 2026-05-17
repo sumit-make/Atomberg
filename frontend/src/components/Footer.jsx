@@ -8,7 +8,7 @@ const Footer = () => {
       <div className="mx-auto max-w-6xl px-4">
         <div className="grid gap-10 md:grid-cols-3">
           <div>
-            <h3 className="font-semibold text-slate-900">AtomBerg Portal</h3>
+            <h3 className="font-semibold text-slate-900">AtomBergy Portal</h3>
             <p className="mt-2 text-sm text-slate-600">Goal-setting, progress tracking, and performance reporting in one place.</p>
           </div>
           <div>

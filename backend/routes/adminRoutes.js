@@ -4,7 +4,7 @@ const auth = require("../middleware/authMiddleware")
 const roleMiddleware = require("../middleware/roleMiddleware")
 const { getUsers, getAllGoalSheets, unlockGoalSheet, getAuditLogs, getCycleConfig, updateCycleConfig } = require("../controllers/adminController")
 
-router.get("/users", auth, roleMiddleware(["admin"]), getUsers)
+router.get("/users", auth, roleMiddleware(["admin", "manager"]), getUsers)
 router.get("/goals", auth, roleMiddleware(["admin"]), getAllGoalSheets)
 router.put("/goals/unlock/:id", auth, roleMiddleware(["admin"]), unlockGoalSheet)
 router.get("/audit-logs", auth, roleMiddleware(["admin"]), getAuditLogs)

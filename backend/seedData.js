@@ -10,7 +10,7 @@ const AuditLog = require("./models/AuditLog")
 
 const seedDatabase = async () => {
   try {
-    await mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost:27017/atomquest")
+    await mongoose.connect(process.env.MONGO_URI || process.env.MONGODB_URI || "mongodb://localhost:27017/atomquest")
     console.log("✓ Connected to MongoDB")
 
     // Clear existing data

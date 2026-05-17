@@ -2,6 +2,24 @@ const Achievement = require("../models/Achievement")
 const GoalSheet = require("../models/GoalSheet")
 const { calculateProgressScore, getCurrentPeriod, getActiveWindow, isActionAllowed } = require("../utils/scoreCalculator")
 
+const resolveAchievementEmployeeId = async (achievement) => {
+  if (achievement.employeeId) return achievement.employeeId.toString()
+
+  if (!achievement.goalSheetId) return null
+
+  let goalSheet
+  if (typeof achievement.goalSheetId === "object" && achievement.goalSheetId.employeeId) {
+    goalSheet = achievement.goalSheetId
+  } else {
+    goalSheet = await GoalSheet.findById(achievement.goalSheetId).select("employeeId")
+  }
+
+  if (!goalSheet?.employeeId) return null
+
+  await Achievement.findByIdAndUpdate(achievement._id, { employeeId: goalSheet.employeeId })
+  return goalSheet.employeeId.toString()
+}
+
 exports.submitAchievement = async (req, res) => {
   try {
     if (!(await isActionAllowed("achievementSubmission"))) {
@@ -57,7 +75,16 @@ exports.getAchievements = async (req, res) => {
     const query = { employeeId: req.user.id }
     if (goalSheetId) query.goalSheetId = goalSheetId
 
-    const achievements = await Achievement.find(query).sort({ year: -1, period: -1 })
+    let achievements = await Achievement.find(query).sort({ year: -1, period: -1 })
+
+    if (achievements.length === 0) {
+      const goalSheets = await GoalSheet.find({ employeeId: req.user.id }).select("_id")
+      const goalSheetIds = goalSheets.map((sheet) => sheet._id)
+      const fallbackQuery = { employeeId: { $exists: false }, goalSheetId: { $in: goalSheetIds } }
+      if (goalSheetId) fallbackQuery.goalSheetId = goalSheetId
+      achievements = await Achievement.find(fallbackQuery).sort({ year: -1, period: -1 })
+    }
+
     res.json(achievements)
   } catch (error) {
     res.status(500).json({ message: error.message })
@@ -99,17 +126,21 @@ exports.getTeamAchievements = async (req, res) => {
     }
 
     const employees = await User.find({ managerId: req.user.id })
-    const employeeIds = employees.map((e) => e._id)
+    const employeeIds = employees.map((e) => e._id.toString())
 
-    const achievements = await Achievement.find({
-      employeeId: { $in: employeeIds },
-      period,
-      year
-    })
+    const achievements = await Achievement.find({ period, year })
       .populate("employeeId", "name email")
       .populate("goalSheetId")
 
-    res.json(achievements)
+    const filteredAchievements = []
+    for (const achievement of achievements) {
+      const resolvedEmployeeId = await resolveAchievementEmployeeId(achievement)
+      if (employeeIds.includes(resolvedEmployeeId)) {
+        filteredAchievements.push(achievement)
+      }
+    }
+
+    res.json(filteredAchievements)
   } catch (error) {
     res.status(500).json({ message: error.message })
   }
@@ -222,24 +253,31 @@ exports.getCompletionDashboard = async (req, res) => {
     }
 
     const employees = await User.find({ role: "employee" })
+    const periodAchievements = await Achievement.find({ period, year }).populate("goalSheetId", "employeeId")
+
+    const achievementsByEmployee = {}
+    await Promise.all(
+      periodAchievements.map(async (achievement) => {
+        const resolvedEmployeeId = await resolveAchievementEmployeeId(achievement)
+        if (!resolvedEmployeeId) return
+
+        achievementsByEmployee[resolvedEmployeeId] = (achievementsByEmployee[resolvedEmployeeId] || 0) + 1
+      })
+    )
 
     const completionData = await Promise.all(
       employees.map(async (emp) => {
         const gs = await GoalSheet.findOne({ employeeId: emp._id }).sort({ updatedAt: -1, createdAt: -1 })
-        const achievements = await Achievement.find({
-          employeeId: emp._id,
-          period,
-          year
-        })
-
+        const submittedCount = achievementsByEmployee[emp._id.toString()] || 0
         const totalGoals = (gs?.goals?.length || 0) + (gs?.sharedGoals?.length || 0)
+
         return {
           employeeName: emp.name,
           employeeEmail: emp.email,
           goalSheetStatus: gs?.status || "no_sheet",
-          achievementsSubmitted: achievements.length,
+          achievementsSubmitted: submittedCount,
           goalsCount: totalGoals,
-          completionPercentage: totalGoals ? Math.round((achievements.length / totalGoals) * 100) : 0
+          completionPercentage: totalGoals ? Math.round((submittedCount / totalGoals) * 100) : 0
         }
       })
     )
