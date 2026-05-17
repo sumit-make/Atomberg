@@ -178,7 +178,7 @@ npm run load:raw
 Backend runs on:
 
 ```bash
-http://localhost:5000
+http://localhost:5001
 ```
 
 ---
@@ -295,11 +295,13 @@ Add project screenshots here.
 
 Example:
 
-```md
-![Dashboard](./screenshots/dashboard.png)
-![Goals](./screenshots/goals.png)
-![Manager Panel](./screenshots/manager.png)
-```
+
+<img width="1497" height="952" alt="Screenshot 2026-05-17 204210" src="https://github.com/user-attachments/assets/0cfe51eb-ac14-49c1-b81e-12dc94e62434" />
+<img width="1907" height="938" alt="Screenshot 2026-05-17 204240" src="https://github.com/user-attachments/assets/ad0e179c-89de-445d-8e22-5840be14553e" />
+<img width="1879" height="903" alt="Screenshot 2026-05-17 204305" src="https://github.com/user-attachments/assets/f6c244fa-626e-438c-9c1c-a5065c0a4b01" />
+<img width="1472" height="885" alt="Screenshot 2026-05-17 204323" src="https://github.com/user-attachments/assets/62953e67-c819-47dc-ac68-db1703d11fea" />
+<img width="1608" height="898" alt="Screenshot 2026-05-17 204347" src="https://github.com/user-attachments/assets/731349fa-d23a-4c9a-a5d5-4f2d4b9db3fa" />
+<img width="1677" height="687" alt="Screenshot 2026-05-17 204945" src="https://github.com/user-attachments/assets/b2f47c1b-09a4-4e5c-b352-33e8dba33e5b" />
 
 ---
 
@@ -337,13 +339,7 @@ Contributions are welcome.
 4. Push to the branch
 5. Open a Pull Request
 
----
 
-# 📄 License
-
-This project is licensed under the MIT License.
-
----
 
 # 👨‍💻 Developer
 
