@@ -1,0 +1,46 @@
+{
+  "users": [
+    { "name": "AtomQuest Admin", "email": "admin@atomquest.com", "password": "Admin@123", "role": "admin" },
+    { "name": "Genesis Manager", "email": "manager@atomquest.com", "password": "Manager@123", "role": "manager" },
+    { "name": "Orion Manager", "email": "manager2@atomquest.com", "password": "Manager@123", "role": "manager" },
+    { "name": "Nova Employee", "email": "employee@atomquest.com", "password": "Employee@123", "role": "employee", "managerEmail": "manager@atomquest.com" },
+    { "name": "Luna Employee", "email": "employee2@atomquest.com", "password": "Employee@123", "role": "employee", "managerEmail": "manager2@atomquest.com" },
+    { "name": "Rex Employee", "email": "employee3@atomquest.com", "password": "Employee@123", "role": "employee", "managerEmail": "manager@atomquest.com" }
+  ],
+  "goalSheets": [
+    {
+      "employeeEmail": "employee@atomquest.com",
+      "status": "submitted",
+      "locked": false,
+      "goals": [
+        { "title": "Improve onboarding", "description": "Add product walkthrough.", "thrustArea": "UX", "uomType": "Completion", "target": 1, "achievement": 1, "weightage": 20, "status": "In Progress" },
+        { "title": "Reduce bugs", "description": "Fix top 10 defects.", "thrustArea": "Quality", "uomType": "Bugs", "target": 10, "achievement": 4, "weightage": 15, "status": "In Progress" }
+      ]
+    },
+    {
+      "employeeEmail": "employee2@atomquest.com",
+      "status": "draft",
+      "locked": false,
+      "goals": [
+        { "title": "Documentation coverage", "description": "Increase docs coverage to 80%.", "thrustArea": "Knowledge", "uomType": "Percent", "target": 80, "achievement": 20, "weightage": 10, "status": "Not Started" },
+        { "title": "CI improvements", "description": "Add pipelines for tests.", "thrustArea": "Infra", "uomType": "Pipelines", "target": 1, "achievement": 0, "weightage": 25, "status": "Not Started" }
+      ]
+    },
+    {
+      "employeeEmail": "employee3@atomquest.com",
+      "status": "approved",
+      "locked": true,
+      "goals": [
+        { "title": "Customer NPS", "description": "Improve NPS by 5 points.", "thrustArea": "Customer", "uomType": "Points", "target": 5, "achievement": 5, "weightage": 30, "status": "Complete" },
+        { "title": "Cycle time", "description": "Reduce average cycle time.", "thrustArea": "Ops", "uomType": "Days", "target": 20, "achievement": 18, "weightage": 20, "status": "Complete" }
+      ]
+    }
+  ],
+  "checkIns": [
+    { "employeeEmail": "employee@atomquest.com", "comment": "Completed walkthrough prototype.", "date": "2026-05-01T10:00:00Z" },
+    { "employeeEmail": "employee3@atomquest.com", "comment": "Delivered final report.", "date": "2026-04-25T09:30:00Z" }
+  ],
+  "auditLogs": [
+    { "action": "Seed import", "changedByEmail": "admin@atomquest.com", "oldValue": {}, "newValue": { "note": "Initial raw dataset" }, "createdAt": "2026-05-16T08:00:00Z" }
+  ]
+}
