@@ -211,25 +211,6 @@ http://localhost:5173
 
 ---
 
-# 🔐 Environment Variables
-
-Create a `.env` file inside the backend folder.
-
-```env
-PORT=5000
-MONGO_URI=YOUR_MONGODB_URI
-JWT_SECRET=atomquestsecret
-```
-
----
-
-5. Test Login Credentials
-Role	Email	Password
-ADMIN	admin@test.com	Admin@123
-MANAGER 1	alice.manager@test.com	Manager@123
-MANAGER 2	bob.manager@test.com	Manager@123
-EMPLOYEE 1	john.emp@test.com	Emp@123
-EMPLOYEE 2	sarah.emp@test.com	Emp@123
 
 
 ---
