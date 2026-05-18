@@ -223,13 +223,14 @@ JWT_SECRET=atomquestsecret
 
 ---
 
-# 👥 Demo Login Credentials
+5. Test Login Credentials
+Role	Email	Password
+ADMIN	admin@test.com	Admin@123
+MANAGER 1	alice.manager@test.com	Manager@123
+MANAGER 2	bob.manager@test.com	Manager@123
+EMPLOYEE 1	john.emp@test.com	Emp@123
+EMPLOYEE 2	sarah.emp@test.com	Emp@123
 
-| Role | Email | Password |
-|------|--------|----------|
-| Admin | admin@atomquest.com | Admin@123 |
-| Manager | manager@atomquest.com | Manager@123 |
-| Employee | employee@atomquest.com | Employee@123 |
 
 ---
 
